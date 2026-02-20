@@ -1,64 +1,9 @@
-<script>
-let player = document.getElementById("player");
-let obstacle = document.getElementById("obstacle");
-
-let obstaclePosition = -40;
-let isJumping = false;
-let gameOver = false;
-
-function moveObstacle(){
-  if(gameOver) return;
-
-  obstaclePosition += 3;
-  obstacle.style.top = obstaclePosition + "px";
-
-  if(obstaclePosition > 400){
-    obstaclePosition = -40;
-  }
-
-  let playerRect = player.getBoundingClientRect();
-  let obstacleRect = obstacle.getBoundingClientRect();
-
-  if (
-    playerRect.left < obstacleRect.right &&
-    playerRect.right > obstacleRect.left &&
-    playerRect.top < obstacleRect.bottom &&
-    playerRect.bottom > obstacleRect.top
-  ) {
-    gameOver = true;
-    alert("Game Over 😭 Tap to Restart");
-    location.reload(); // clean restart
-  }
-}
-
-setInterval(moveObstacle, 30);
-
-
-// Smooth Jump
-function jump(){
-  if(isJumping || gameOver) return;
-
-  isJumping = true;
-  let position = 10;
-
-  let up = setInterval(function(){
-    if(position >= 120){
-      clearInterval(up);
-
-      let down = setInterval(function(){
-        if(position <= 10){
-          clearInterval(down);
-          isJumping = false;
-        }
-        position -= 5;
-        player.style.bottom = position + "px";
-      },20);
-
-    }
-    position += 5;
-    player.style.bottom = position + "px";
-  },20);
-}
-
-document.addEventListener("click", jump);
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hyd Runner Test</title>
+</head>
+<body>
+  <h1>Hyd Runner Working 🔥</h1>
+</body>
+</html>
