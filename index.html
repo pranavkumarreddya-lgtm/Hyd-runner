@@ -5,26 +5,34 @@ let obstacle = document.getElementById("obstacle");
 let obstaclePosition = 0;
 let isJumping = false;
 
-// Obstacle movement (slow chesam)
+// obstacle movement
 setInterval(function(){
-  obstaclePosition += 3;   // speed taggincham
+  obstaclePosition += 3;
   obstacle.style.top = obstaclePosition + "px";
 
   if(obstaclePosition > 400){
-    obstaclePosition = 0;
+    obstaclePosition = -40; // reset properly
   }
 
-  let playerBottom = parseInt(window.getComputedStyle(player).getPropertyValue("bottom"));
+  // positions get cheyyadam
+  let playerRect = player.getBoundingClientRect();
+  let obstacleRect = obstacle.getBoundingClientRect();
 
-  if(obstaclePosition > 350 && obstaclePosition < 390 && playerBottom < 60){
+  // proper collision detection
+  if (
+    playerRect.left < obstacleRect.right &&
+    playerRect.right > obstacleRect.left &&
+    playerRect.top < obstacleRect.bottom &&
+    playerRect.bottom > obstacleRect.top
+  ) {
     alert("Game Over 😭");
-    obstaclePosition = 0;
+    obstaclePosition = -40;
   }
 
 }, 40);
 
 
-// Smooth Jump
+// smooth jump
 function jump(){
   if(isJumping) return;
 
