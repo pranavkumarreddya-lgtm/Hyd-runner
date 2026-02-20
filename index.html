@@ -2,39 +2,41 @@
 let player = document.getElementById("player");
 let obstacle = document.getElementById("obstacle");
 
-let obstaclePosition = 0;
+let obstaclePosition = -40;
 let isJumping = false;
+let gameOver = false;
 
-// obstacle movement
-setInterval(function(){
+function moveObstacle(){
+  if(gameOver) return;
+
   obstaclePosition += 3;
   obstacle.style.top = obstaclePosition + "px";
 
   if(obstaclePosition > 400){
-    obstaclePosition = -40; // reset properly
+    obstaclePosition = -40;
   }
 
-  // positions get cheyyadam
   let playerRect = player.getBoundingClientRect();
   let obstacleRect = obstacle.getBoundingClientRect();
 
-  // proper collision detection
   if (
     playerRect.left < obstacleRect.right &&
     playerRect.right > obstacleRect.left &&
     playerRect.top < obstacleRect.bottom &&
     playerRect.bottom > obstacleRect.top
   ) {
-    alert("Game Over 😭");
-    obstaclePosition = -40;
+    gameOver = true;
+    alert("Game Over 😭 Tap to Restart");
+    location.reload(); // clean restart
   }
+}
 
-}, 40);
+setInterval(moveObstacle, 30);
 
 
-// smooth jump
+// Smooth Jump
 function jump(){
-  if(isJumping) return;
+  if(isJumping || gameOver) return;
 
   isJumping = true;
   let position = 10;
